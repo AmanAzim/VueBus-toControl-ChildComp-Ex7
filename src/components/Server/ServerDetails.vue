@@ -1,8 +1,8 @@
 <template>
     <div class="col-xs-12 col-sm-6">
-        <p v-if="serverStatus.length==0">Server Details are currently not updated</p>
-        <p v-else>Server Status: {{serverStatus}} <br>
-                  <button @click="changeStatus">Change Status</button>
+        <p v-if="!server">Server Details are currently not updated</p>
+        <p v-else>Server #{{server.id}} Server Status: {{server.status}} <br>
+            <button @click="changeStatus">Change Status</button>
         </p>
     </div>
 
@@ -13,16 +13,16 @@
     export default {
         data:function () {
             return{
-              serverStatus:'',
+              server:null,
             };
         },
         created(){
-            eventBus.$on('transmit-status', (status)=>{ this.serverStatus=status; });
+            eventBus.$on('transmit-status', (server)=>{ this.server=server; });
         },
         methods:{
             changeStatus(){
-                this.serverStatus='Good';
-                eventBus.$emit('changed-status', this.serverStatus); //This is not needed because server status in an object type so changing it in any component will be ill be counted as global because every component as the pointer to of its direct memory location
+                this.server.status='Good';
+                eventBus.$emit('changed-status', this.server); //This is not needed because server status in an object type so changing it in any component will be ill be counted as global because every component as the pointer to of its direct memory location
             }
         }
     }

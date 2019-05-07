@@ -1,12 +1,10 @@
 <template>
     <div class="col-xs-12 col-sm-6">
         <ul class="list-group">
-            <li
-                    class="list-group-item"
-                    v-for="index in servers"
-                    v-on:click="showDetail(index.status)"
-                    style="cursor: pointer" >
-                Server #{{ index.id }}
+            <li class="list-group-item" style="cursor: pointer"
+                    v-for="server in servers"
+                    v-on:click="showDetail(server)"
+                     >Server #{{ server.id }}
             </li>
         </ul>
     </div>
@@ -28,12 +26,12 @@
             };
         },
         methods:{
-            showDetail(status){
-                eventBus.$emit('transmit-status', status);
+            showDetail(server){
+                eventBus.$emit('transmit-status', server);
             },
         },
         created(){
-            eventBus.$on('changed-status', (newStatus)=>{ this.servers.status=newStatus;} );
+            //eventBus.$on('changed-status', (server)=>{ this.servers.status=newStatus;} );
         }
     }
 </script>
